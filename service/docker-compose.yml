@@ -1,0 +1,30 @@
+version: "3"
+services:
+  service:
+    restart: unless-stopped
+#    image: ghcr.io/uo266575/carfinder_backend:latest
+    build:
+      context: /Users/joseantoniopm/Documents/Academy/CarFinder
+      dockerfile: Dockerfile
+    container_name: carfinder_backend
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    environment:
+      - elastic.port=${ELASTIC_PORT}
+      - elastic.hostname=${ELASTIC_HOSTNAME}
+      - elastic.scheme=${ELASTIC_SCHEME}
+    networks:
+      - elastic_elasticsearch_network
+  # front:
+  #   restart: unless-stopped
+  #   image: ghcr.io/icekar-es/ad-finder-front:latest
+  #   container_name: ad-finder-front
+  #   expose:
+  #     - "3000"
+  #   ports:
+  #     - "8081:3000"
+networks:
+  elastic_elasticsearch_network:
+    external: true
